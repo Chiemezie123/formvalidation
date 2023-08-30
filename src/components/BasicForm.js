@@ -5,6 +5,7 @@ const BasicForm = (props) => {
     lastName: '',
     email: '',
   });
+  const [emailError , setEmailError] = useState(false);
 
   const [isContactValid , setContactValid] =useState ({
     nameValid: false,
@@ -92,13 +93,20 @@ if( contactInfo.name === "" && isContactValid.nameValid){
 
   const submitHandler =(event)=>{
     event.preventDefault();
-    console.log(contactInfo);
+    if(contactInfo.email.includes('@')){
+      console.log(contactInfo);
     setContactInfo((prev)=>({
       ...prev,
       name: '',
       lastName: '',
       email: '',
     }))
+    }else{
+      setEmailError(true)
+      return;
+
+    }
+    
   }
 
 
@@ -144,6 +152,7 @@ if( contactInfo.name === "" && isContactValid.nameValid){
          />
 
         { !isContactReallyVaild.emailVailder && <p className="error-text"> please input your email Address</p>}
+        {emailError &&  <p  className="error-text">please input a correct email above</p>}
       </div>
       <div className='form-actions'>
         <button > Submit</button>
